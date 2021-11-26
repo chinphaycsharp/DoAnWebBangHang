@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FD1BFEF1-8342-4153-A03F-050B9CF9D1E2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DoAnWebBanHang.Data</RootNamespace>
+    <AssemblyName>DoAnWebBanHang.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Infastructure\DbFactory.cs" />
+    <Compile Include="Infastructure\Disposable.cs" />
+    <Compile Include="Infastructure\IDbFactory.cs" />
+    <Compile Include="Infastructure\IRepository.cs" />
+    <Compile Include="Infastructure\IUnitOfWork.cs" />
+    <Compile Include="Infastructure\RepositoryBase.cs" />
+    <Compile Include="Infastructure\UnitOfWork.cs" />
+    <Compile Include="Migrations\202109221518372_initialDB.cs" />
+    <Compile Include="Migrations\202109221518372_initialDB.designer.cs">
+      <DependentUpon>202109221518372_initialDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109251216033_AddErrorTable.cs" />
+    <Compile Include="Migrations\202109251216033_AddErrorTable.designer.cs">
+      <DependentUpon>202109251216033_AddErrorTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109270442516_Add-ASPIdentity.cs" />
+    <Compile Include="Migrations\202109270442516_Add-ASPIdentity.designer.cs">
+      <DependentUpon>202109270442516_Add-ASPIdentity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109280354484_Add-DataProductCategory.cs" />
+    <Compile Include="Migrations\202109280354484_Add-DataProductCategory.Designer.cs">
+      <DependentUpon>202109280354484_Add-DataProductCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110181531200_add-table-contentdetails.cs" />
+    <Compile Include="Migrations\202110181531200_add-table-contentdetails.Designer.cs">
+      <DependentUpon>202110181531200_add-table-contentdetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110210328475_add-table-Feedback.cs" />
+    <Compile Include="Migrations\202110210328475_add-table-Feedback.Designer.cs">
+      <DependentUpon>202110210328475_add-table-Feedback.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111081612032_add-storeProcedure.cs" />
+    <Compile Include="Migrations\202111081612032_add-storeProcedure.Designer.cs">
+      <DependentUpon>202111081612032_add-storeProcedure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111230352089_add-property-usermember.cs" />
+    <Compile Include="Migrations\202111230352089_add-property-usermember.Designer.cs">
+      <DependentUpon>202111230352089_add-property-usermember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ApplicationGroupRepository.cs" />
+    <Compile Include="Repositories\ApplicationRoleGroupRepository.cs" />
+    <Compile Include="Repositories\ApplicationRoleRepository.cs" />
+    <Compile Include="Repositories\ApplicationUserGroupRepository.cs" />
+    <Compile Include="Repositories\ApplicationUserRepository.cs" />
+    <Compile Include="Repositories\ContactDetailRepository.cs" />
+    <Compile Include="Repositories\ErrorRepository.cs" />
+    <Compile Include="Repositories\FeedbackRepository.cs" />
+    <Compile Include="Repositories\FooterRepository.cs" />
+    <Compile Include="Repositories\MenuGroupRepository.cs" />
+    <Compile Include="Repositories\MenuRepository.cs" />
+    <Compile Include="Repositories\OrderDetailRepository.cs" />
+    <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Repositories\PageRepository.cs" />
+    <Compile Include="Repositories\PostCategoryRepository.cs" />
+    <Compile Include="Repositories\PostRepository.cs" />
+    <Compile Include="Repositories\PostTagRepository.cs" />
+    <Compile Include="Repositories\ProductCategoryRepository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\ProductTagRepository.cs" />
+    <Compile Include="Repositories\SlideRepository.cs" />
+    <Compile Include="Repositories\SupportOnlineRepository.cs" />
+    <Compile Include="Repositories\SystemConfigRepository.cs" />
+    <Compile Include="Repositories\TagRepository.cs" />
+    <Compile Include="Repositories\VisitorStatisticRepository.cs" />
+    <Compile Include="WebShopDbContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DoAnWebBanHang.Common\DoAnWebBanHang.Common.csproj">
+      <Project>{26b3291b-b976-4db3-9562-d12413fc4ef2}</Project>
+      <Name>DoAnWebBanHang.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DoAnWebBanHang.Model\DoAnWebBanHang.Model.csproj">
+      <Project>{bd0ade40-1f00-4b81-8ea6-9cb0480368d2}</Project>
+      <Name>DoAnWebBanHang.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202109221518372_initialDB.resx">
+      <DependentUpon>202109221518372_initialDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109251216033_AddErrorTable.resx">
+      <DependentUpon>202109251216033_AddErrorTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109270442516_Add-ASPIdentity.resx">
+      <DependentUpon>202109270442516_Add-ASPIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109280354484_Add-DataProductCategory.resx">
+      <DependentUpon>202109280354484_Add-DataProductCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110181531200_add-table-contentdetails.resx">
+      <DependentUpon>202110181531200_add-table-contentdetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110210328475_add-table-Feedback.resx">
+      <DependentUpon>202110210328475_add-table-Feedback.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111081612032_add-storeProcedure.resx">
+      <DependentUpon>202111081612032_add-storeProcedure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111230352089_add-property-usermember.resx">
+      <DependentUpon>202111230352089_add-property-usermember.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

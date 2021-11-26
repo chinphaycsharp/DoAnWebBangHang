@@ -1,0 +1,131 @@
+﻿@model DoAnWebBanHang.WebApp.Infastructure.Core.PaginationSet<DoAnWebBanHang.Service.Models.UserOrderHistoryByCustomer>
+
+@{
+
+    ViewBag.Title = "OrderHistory";
+    Layout = "~/Views/Shared/Layouts.cshtml";
+}
+
+
+    <div class="women-product">
+        <div class="w_content">
+            <div class="women">
+
+                <h2>Lịch sử mua hàng</h2>
+                @using (Html.BeginForm("OrderHistory", "ShoppingCart", FormMethod.Get,new { customerId = ViewBag.customerId }))
+                {
+                    <p>
+                        Tìm kiếm đơn hàng : @Html.TextBox("SearchString")
+                        <input type="submit" value="Search" />
+                    </p>
+                }
+                <table class="table table-striped">
+                    <tr>
+                        <th>
+                            Ngày mua
+                        </th>
+                        <th>
+                            Ảnh sản phẩm
+                        </th>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <th>
+                            Số lượng
+                        </th>
+                        <th>
+                            Giá
+                        </th>
+                        <th>
+                            Phương thức thanh toán
+                        </th>
+                        <th>
+                            Trạng thái
+                        </th>
+
+                    </tr>
+
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.datePurchaseString)
+                            </td>
+                            <td>
+                                <img src="@item.Image" style="width:60px;height:60px" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentMethod)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentStatus)
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+            <div class="clearfix"> </div>
+            @if (Model.TotalPages > 1)
+            {
+                // Create numeric links
+                var startPageIndex = Math.Max(1, Model.Page - Model.MaxPage / 2);
+                var endPageIndex = Math.Min(Model.TotalPages, Model.Page + Model.MaxPage / 2);
+
+                <nav>
+                    <ul class="pagination">
+                        @if (Model.Page > 1)
+                        {
+                            <li>
+                                <a href="?page=1" aria-label="First">
+                                    <i class="fa fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="?page=@(Model.Page-1)" aria-label="Previous">
+                                    <i class="fa fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                        }
+
+                        @for (int i = startPageIndex; i <= endPageIndex; i++)
+                        {
+                            if (Model.Page == i)
+                            {
+                                <li class="active"><a href="?page=@i" title="Trang @i">@i</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="?page=@i" title="Trang @i">@i</a></li>
+                            }
+                        }
+                        @if (Model.Page < Model.TotalPages)
+                        {
+                            <li>
+                                <a href="?page=@(Model.Page+1)" aria-label="Next">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="?page=@Model.TotalPages" aria-label="Last">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+
