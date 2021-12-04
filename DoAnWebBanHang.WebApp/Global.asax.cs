@@ -1,3 +1,5 @@
+using DoAnWebBanHang.Service;
+using DoAnWebBanHang.WebApp.Infastructure.Core;
 using DoAnWebBanHang.WebApp.Mappings;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,9 @@ namespace DoAnWebBanHang.WebApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //IFeedbackService service = ServiceFactory.Get<FeedbackService>();
+
         }
     }
 }

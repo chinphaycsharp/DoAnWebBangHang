@@ -1,5 +1,8 @@
-﻿using DoAnWebBanHang.Data;
+﻿using DoAnWebBanHang.Common;
+using DoAnWebBanHang.Data;
 using DoAnWebBanHang.Model.Models;
+using DoAnWebBanHang.Service;
+using DoAnWebBanHang.WebApp.Infastructure.Core;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -9,6 +12,7 @@ using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -100,10 +104,21 @@ namespace DoAnWebBanHang.WebApp.App_Start
                 }
                 if (user != null)
                 {
-                    ClaimsIdentity identity = await userManager.CreateIdentityAsync(
+                    var applicationGroupService = ServiceFactory.Get<IApplicationGroupService>();
+                    var listGroup = applicationGroupService.GetListGroupByUserId(user.Id);
+                    if(listGroup.Any(x=>x.Name == CommonConstants.Admin))
+                    {
+                        ClaimsIdentity identity = await userManager.CreateIdentityAsync(
                                                            user,
                                                            DefaultAuthenticationTypes.ExternalBearer);
-                    context.Validated(identity);
+                        context.Validated(identity);
+                    }
+                    else
+                    {
+                        context.Rejected();
+                        context.SetError("Không phải là Admin");
+                    }
+                    
                 }
                 else
                 {

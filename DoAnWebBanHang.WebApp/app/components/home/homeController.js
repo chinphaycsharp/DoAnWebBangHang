@@ -1,10 +1,10 @@
 ﻿(function (app) {
     app.controller('homeController', homeController);
-    homeController.$inject = ['$rootScope', 'apiService'];
-    function homeController($rootScope, apiService) {
+    homeController.$inject = ['$rootScope', 'apiService', 'localStorageService'];
+    function homeController($rootScope, apiService, localStorageService) {
 
-        var username = $rootScope.userName;
-        var password = $rootScope.password;
+        var username = localStorageService.get("userName");
+        var password = localStorageService.get("passWord");
         console.log(username);
         console.log(password);
         function getCurrentUser() {

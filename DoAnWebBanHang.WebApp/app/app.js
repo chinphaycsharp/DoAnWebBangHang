@@ -20,7 +20,7 @@
             .state('base', {
                 url: '',
                 templateUrl: '/app/shared/views/baseView.html',
-                abstract: true
+                abstract: true  
             }).state('login', {
                 url: "/login",
                 templateUrl: "/app/components/login/loginView.html",

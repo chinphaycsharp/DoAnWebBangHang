@@ -43,7 +43,7 @@ namespace DoAnWebBanHang.WebApp.Api
 
         [Route("getlistpaging")]
         [HttpGet]
-        //[Authorize(Roles ="ViewUser")]
+        [Authorize(Roles = "ViewUser")]
         public HttpResponseMessage GetListPaging(HttpRequestMessage request, int page, int pageSize, string filter = null)
         {
             return CreateHttpResponse(request, () =>
@@ -67,9 +67,35 @@ namespace DoAnWebBanHang.WebApp.Api
             });
         }
 
+        [Route("getlistpagiNotAdmin")]
+        [HttpGet]
+        [Authorize(Roles = "ViewUser")]
+        public HttpResponseMessage GetListPagingNotAdmin(HttpRequestMessage request, int page, int pageSize, string filter = null)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                int totalRow = 0;
+                var model = _userService.GetUserNotAdmin();
+                IEnumerable<ApplicationUserViewModel> modelVm = Mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<ApplicationUserViewModel>>(model);
+
+                PaginationSet<ApplicationUserViewModel> pagedSet = new PaginationSet<ApplicationUserViewModel>()
+                {
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize),
+                    Items = modelVm
+                };
+
+                response = request.CreateResponse(HttpStatusCode.OK, pagedSet);
+
+                return response;
+            });
+        }
+
         [Route("gettopuserordersviewmodel")]
         [HttpGet]
-        //[Authorize(Roles ="ViewUser")]
+        [Authorize(Roles = "ViewUser")]
         public HttpResponseMessage GetTopUserOrdersViewModel(HttpRequestMessage request)
         {
             return CreateHttpResponse(request, () =>
@@ -83,7 +109,7 @@ namespace DoAnWebBanHang.WebApp.Api
 
         [Route("detail/{id}")]
         [HttpGet]
-        //[Authorize(Roles = "ViewUser")]
+
         public HttpResponseMessage Details(HttpRequestMessage request, string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -108,7 +134,7 @@ namespace DoAnWebBanHang.WebApp.Api
 
         [HttpPost]
         [Route("add")]
-        //[Authorize(Roles = "AddUser")]
+        [Authorize(Roles = "AddUser")]
         public async Task<HttpResponseMessage> Create(HttpRequestMessage request, ApplicationUserViewModel applicationUserViewModel)
         {
             if (ModelState.IsValid)
@@ -164,7 +190,7 @@ namespace DoAnWebBanHang.WebApp.Api
 
         [HttpPut]
         [Route("update")]
-        //[Authorize(Roles = "UpdateUser")]
+        [Authorize(Roles = "UpdateUser")]
         public async Task<HttpResponseMessage> Update(HttpRequestMessage request, ApplicationUserViewModel applicationUserViewModel)
         {
             if (ModelState.IsValid)
@@ -213,7 +239,7 @@ namespace DoAnWebBanHang.WebApp.Api
 
         [HttpDelete]
         [Route("delete")]
-        //[Authorize(Roles ="DeleteUser")]
+        [Authorize(Roles = "deleteuser")]
         public async Task<HttpResponseMessage> Delete(HttpRequestMessage request, string id)
         {
             var appUser = await _userManager.FindByIdAsync(id);

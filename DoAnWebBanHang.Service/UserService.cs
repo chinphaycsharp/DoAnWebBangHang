@@ -20,19 +20,23 @@ namespace DoAnWebBanHang.Service
         IEnumerable<TopUserOrdersViewModel> GetTopUserOrders();
 
         ApplicationUser getCurrentUser(string username);
+
+        IEnumerable<ApplicationUser> GetUserNotAdmin();
     }
 
     public class UserService : IUserService
     {
         private IApplicationUserRepository _applicationUserRepository;
+        private IApplicationGroupRepository _applicationGruopRepository;
         private IOrderDetailService _orderDetailService;
         private IOrderService _orderService;
         private IUnitOfWork _unitOfWork;
         private IApplicationUserRepository _applicationUser;
 
-        public UserService( IUnitOfWork unitOfWork, IApplicationUserRepository applicationUserRepository, IOrderDetailService orderDetailService, IOrderService orderService, IApplicationUserRepository applicationUser)
+        public UserService( IUnitOfWork unitOfWork, IApplicationUserRepository applicationUserRepository, IOrderDetailService orderDetailService, IOrderService orderService, IApplicationUserRepository applicationUser, IApplicationGroupRepository applicationGroupRepository)
         {
             this._applicationUserRepository = applicationUserRepository;
+            this._applicationGruopRepository = applicationGroupRepository;
             this._unitOfWork = unitOfWork;
             this._orderDetailService = orderDetailService;
             this._orderService = orderService;
@@ -74,6 +78,13 @@ namespace DoAnWebBanHang.Service
                              Price = od.Price
                          };
             return result;
+        }
+
+        public IEnumerable<ApplicationUser> GetUserNotAdmin()
+        {
+            var adminGroup = _applicationGruopRepository.GetGroupByName(CommonConstants.Admin);
+            var userNotAdmin = _applicationGruopRepository.GetListUserByGroupIdNotAdmin(adminGroup.ID);
+            return userNotAdmin;
         }
     }
 }

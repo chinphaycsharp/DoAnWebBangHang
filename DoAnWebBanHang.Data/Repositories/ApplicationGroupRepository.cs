@@ -12,12 +12,20 @@ namespace DoAnWebBanHang.Data.Repositories
     {
         IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId);
         IEnumerable<ApplicationUser> GetListUserByGroupId(int groupId);
+        IEnumerable<ApplicationUser> GetListUserByGroupIdNotAdmin(int groupId);
+        ApplicationGroup GetGroupByName(string groupName);
     }
     public class ApplicationGroupRepository : RepositoryBase<ApplicationGroup>, IApplicationGroupRepository
     {
         public ApplicationGroupRepository(IDbFactory dbFactory) : base(dbFactory)
         {
 
+        }
+
+        public ApplicationGroup GetGroupByName(string groupName)
+        {
+            var query = DbContext.ApplicationGroups.Where(x => x.Name == groupName).Single();
+            return query;
         }
 
         public IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId)
@@ -39,6 +47,19 @@ namespace DoAnWebBanHang.Data.Repositories
                         on ug.UserId equals u.Id
                         where ug.GroupId == groupId
                         select u;
+            return query;
+        }
+
+        public IEnumerable<ApplicationUser> GetListUserByGroupIdNotAdmin(int groupId)
+        {
+            var query = from g in DbContext.ApplicationGroups
+                        join ug in DbContext.ApplicationUserGroups
+                        on g.ID equals ug.GroupId
+                        join u in DbContext.Users
+                        on ug.UserId equals u.Id
+                        where ug.GroupId != groupId
+                        select u;
+            var result = query.ToList();
             return query;
         }
     }
