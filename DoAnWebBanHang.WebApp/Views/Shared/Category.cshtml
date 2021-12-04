@@ -10,11 +10,12 @@
             {
                 var url = "/" + category.Alias + ".pc-" + category.ID + ".html";
                 var childCategories = Model.Where(x => x.ParentID == category.ID);
-                <li>
-                    <a href="@url">@category.Name @(childCategories.Count() > 0 ? "" : "") </a>
+                var parentClass = childCategories.Count() > 0 ? "class= dropdown-toggle data-toggle=dropdown" : "";
+                <li class="dropdown">
+                    <a href="@url" @parentClass>@category.Name </a>
                     @if (childCategories.Count() > 0)
                     {
-                        <ul class="cute">
+                        <ul class="dropdown-menu">
                             @foreach (var childCategory in childCategories)
                             {
                                 var childUrl = "/" + childCategory.Alias + ".pc-" + childCategory.ID + ".html";
