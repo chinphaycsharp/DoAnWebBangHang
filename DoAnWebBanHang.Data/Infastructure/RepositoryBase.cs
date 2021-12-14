@@ -82,7 +82,8 @@ namespace DoAnWebBanHang.Data.Infastructure
             //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
             if (includes != null && includes.Count() > 0)
             {
-                var query = dataContext.Set<T>().Include(includes.First());
+                var a = includes.First();
+                var query = dataContext.Set<T>().Include(a);
                 foreach (var include in includes.Skip(1))
                     query = query.Include(include);
                 return query.AsQueryable();

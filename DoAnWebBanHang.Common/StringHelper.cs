@@ -7,8 +7,18 @@ using System.Threading.Tasks;
 
 namespace DoAnWebBanHang.Common
 {
-    public class StringHelper
+    public static class StringHelper
     {
+        //public static string Parse(this string template, Dictionary<string, string> replacements)
+        //{
+        //    if (replacements.Count > 0)
+        //    {
+        //        template = replacements.Keys
+        //                    .Aggregate(template, (current, key) => current.Replace(key, replacements[key]));
+        //    }
+        //    return template;
+        //}
+
         public static string ToUnsignString(string input)
         {
             input = input.Trim();
@@ -34,6 +44,16 @@ namespace DoAnWebBanHang.Common
                 str2 = str2.Replace("--", "-").ToLower();
             }
             return str2;
+        }
+
+        public static string Parse(this string template, Dictionary<string, string> replacements)
+        {
+            if (replacements.Count > 0)
+            {
+                template = replacements.Keys
+                            .Aggregate(template, (current, key) => current.Replace(key, replacements[key]));
+            }
+            return template;
         }
     }
 }
