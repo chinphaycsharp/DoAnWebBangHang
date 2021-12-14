@@ -30,6 +30,7 @@ namespace DoAnWebBanHang.Service
         IEnumerable<Post> GetAllByTagPaging(string tag, int page, int pageSize, out int totalRow);
 
         void SaveChanges();
+
     }
 
     public class PostService : IPostService
@@ -40,6 +41,11 @@ namespace DoAnWebBanHang.Service
         {
             this._postReposiotry = postRepository;
             this._unitOfWork = unitOfWork;
+        }
+
+        public void Save()
+        {
+            _unitOfWork.Commit();
         }
 
         public void Add(Post post)
@@ -59,7 +65,7 @@ namespace DoAnWebBanHang.Service
 
         public IEnumerable<Post> GetAll()
         {
-            return _postReposiotry.GetAll(new string[] {"PostCategory"});
+            return _postReposiotry.GetAll();
         }
 
         public IEnumerable<Post> GetAllByCategoryPaging(int categoryId, int page, int pageSize, out int totalRow)
@@ -81,6 +87,7 @@ namespace DoAnWebBanHang.Service
         {
             return _postReposiotry.GetSingleById(id);
         }
+
 
         public void SaveChanges()
         {

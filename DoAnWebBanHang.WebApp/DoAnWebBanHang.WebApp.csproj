@@ -76,6 +76,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.0.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.0.2\lib\net20\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -225,7 +228,9 @@
     <Compile Include="Api\ApplicationGroupController.cs" />
     <Compile Include="Api\ApplicationRoleController.cs" />
     <Compile Include="Api\ApplicationUserController.cs" />
+    <Compile Include="Api\OrderController.cs" />
     <Compile Include="Api\PostCategoryController.cs" />
+    <Compile Include="Api\PostController.cs" />
     <Compile Include="Api\ProductCategoryController.cs" />
     <Compile Include="Api\ProductController.cs" />
     <Compile Include="Api\StatisticController.cs" />
@@ -4976,6 +4981,7 @@
     <Content Include="Assets\Admin\libs\ui-select\css\select2.css" />
     <Content Include="Assets\Admin\libs\ui-select\js\angular-sanitize.js" />
     <Content Include="Assets\Admin\libs\ui-select\js\select.js" />
+    <Content Include="Assets\Admin\templates\product-detail.html" />
     <Content Include="Assets\Client\css\bootstrap.css" />
     <Content Include="Assets\Client\css\custom.css" />
     <Content Include="Assets\Client\css\etalage.css" />
@@ -5070,7 +5076,9 @@
     <Folder Include="app\shared\footer\" />
     <Folder Include="app\shared\navigation\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Reports\" />
     <Folder Include="Views\About\" />
+    <Folder Include="Views\Order\" />
     <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>

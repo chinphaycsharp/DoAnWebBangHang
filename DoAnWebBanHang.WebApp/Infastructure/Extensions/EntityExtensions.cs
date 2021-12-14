@@ -51,7 +51,6 @@ namespace DoAnWebBanHang.WebApp.Infastructure.Extensions
         }
         public static void UpdatePost(this Post post, PostViewModel postVm)
         {
-            post.ID = postVm.ID;
             post.Name = postVm.Name;
             post.Description = postVm.Description;
             post.Alias = postVm.Alias;

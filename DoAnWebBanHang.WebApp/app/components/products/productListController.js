@@ -29,6 +29,43 @@
             console.log($scope.productName);
         }
 
+        $scope.exportExcel = exportExcel;
+        $scope.exportPDF = exportPDF;
+        function exportExcel() {
+            var config = {
+                params: {
+                    filter: $scope.keyword
+                }
+            }
+            apiService.get('/api/product/ExportXls', config, function (response) {
+                if (response.status = 200) {
+                    window.location.href = response.data.Message;
+                }
+            }, function (error) {
+                notificationService.displayError(error);
+
+            });
+        }
+
+        function exportPDF(productId) {
+            console.log(productId)
+            var config = {
+                params: {
+                    id: productId
+                }
+            }
+            apiService.get('/api/product/ExportPdf', config, function (response) {
+                if (response.status = 200) {
+                    window.location.href = response.data.Message;
+                }
+            }, function (error) {
+                notificationService.displayError(error);
+
+            });
+        }
+
+
+
         function getAllProductNames () {
             apiService.get('/api/product/getallnameproduct', null, function (result) {
                 console.log(result.data);

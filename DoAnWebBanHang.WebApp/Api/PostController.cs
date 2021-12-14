@@ -9,22 +9,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using System.Web;
+using System.Web.Mvc;
 
 namespace DoAnWebBanHang.WebApp.Api
 {
-    [RoutePrefix("api/postcategories")]
+    [RoutePrefix("api/post")]
     [Authorize]
-    public class PostCategoryController : ApiControllerBase
+    public class PostController : ApiControllerBase
     {
+        IPostService _postService;
         IPostCategoryService _postCategoryService;
-
-        public PostCategoryController(IErrorService errorService, IPostCategoryService postCategoryService) :
+        public PostController(IErrorService errorService, IPostService postService, IPostCategoryService postCategoryService) :
             base(errorService)
         {
+            this._postService = postService;
             this._postCategoryService = postCategoryService;
         }
-
 
         [Route("getallparents")]
         [HttpGet]
@@ -42,19 +43,20 @@ namespace DoAnWebBanHang.WebApp.Api
         }
 
         [Route("getall")]
-        public HttpResponseMessage Get(HttpRequestMessage request, string keyWord, int page, int pageSize = 20)
+        public HttpResponseMessage Get(HttpRequestMessage request,  int page, int pageSize = 20)
         {
             return CreateHttpResponse(request, () =>
             {
                 int totalRow = 0;
-                var model = _postCategoryService.GetAll(keyWord);
+                var model = _postService.GetAll();
+                var a = model.ToList();
 
                 totalRow = model.Count();
-                var query = model.OrderByDescending(x => x.CreatedDate).Skip(page * pageSize).Take(pageSize);
+                var query = model.OrderByDescending(x => x.ID).Skip(page * pageSize).Take(pageSize);
 
-                var responseData = Mapper.Map<IEnumerable<PostCategory>, IEnumerable<PostCategoryViewModel>>(query);
+                var responseData = Mapper.Map<IEnumerable<Post>, IEnumerable<PostViewModel>>(query);
 
-                var paginationSet = new PaginationSet<PostCategoryViewModel>()
+                var paginationSet = new PaginationSet<PostViewModel>()
                 {
                     Items = responseData,
                     Page = page,
@@ -77,7 +79,7 @@ namespace DoAnWebBanHang.WebApp.Api
         }
 
         [Route("add")]
-        public HttpResponseMessage Post(HttpRequestMessage request, PostCategoryViewModel postCategory)
+        public HttpResponseMessage Post(HttpRequestMessage request, PostViewModel postCategory)
         {
             return CreateHttpResponse(request, () =>
             {
@@ -88,11 +90,11 @@ namespace DoAnWebBanHang.WebApp.Api
                 }
                 else
                 {
-                    var newPostCategory = new PostCategory();
-                    newPostCategory.UpdatePostCategory(postCategory);
-                    newPostCategory.CreatedDate = DateTime.Now;
-                    _postCategoryService.Add(newPostCategory);
-                    _postCategoryService.Save();
+                    var newPost = new Post();
+                    newPost.UpdatePost(postCategory);
+                    newPost.CreatedDate = DateTime.Now;
+                    _postService.Add(newPost);
+                    _postService.SaveChanges();
 
                     respone = request.CreateResponse(HttpStatusCode.Created, postCategory);
                 }
@@ -101,21 +103,22 @@ namespace DoAnWebBanHang.WebApp.Api
         }
 
         [Route("update")]
-        public HttpResponseMessage Put(HttpRequestMessage request, PostCategory postCategory)
+        [HttpPut]
+        public HttpResponseMessage Put(HttpRequestMessage request, Post post)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage respone = null;
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     respone = request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
                 }
                 else
                 {
-                    _postCategoryService.Update(postCategory);
-                    _postCategoryService.Save();
+                    _postService.Update(post);
+                    _postService.SaveChanges();
 
-                    respone = request.CreateResponse(HttpStatusCode.OK, postCategory);
+                    respone = request.CreateResponse(HttpStatusCode.OK, post);
                 }
                 return respone;
             });

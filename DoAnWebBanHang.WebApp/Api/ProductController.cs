@@ -273,63 +273,63 @@ namespace DoAnWebBanHang.WebApp.Api
         //    return Request.CreateResponse(HttpStatusCode.OK, "Đã nhập thành công " + addedCount + " sản phẩm thành công.");
         //}
 
-        //[HttpGet]
-        //[Route("ExportXls")]
-        //public async Task<HttpResponseMessage> ExportXls(HttpRequestMessage request, string filter = null)
-        //{
-        //    string fileName = string.Concat("Product_" + DateTime.Now.ToString("yyyyMMddhhmmsss") + ".xlsx");
-        //    var folderReport = ConfigHelper.GetByKey("ReportFolder");
-        //    string filePath = HttpContext.Current.Server.MapPath(folderReport);
-        //    if (!Directory.Exists(filePath))
-        //    {
-        //        Directory.CreateDirectory(filePath);
-        //    }
-        //    string fullPath = Path.Combine(filePath, fileName);
-        //    try
-        //    {
-        //        var data = _productService.GetListProduct(filter).ToList();
-        //        await ReportHelper.GenerateXls(data, fullPath);
-        //        return request.CreateErrorResponse(HttpStatusCode.OK, Path.Combine(folderReport, fileName));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
-        //    }
-        //}
+        [HttpGet]
+        [Route("ExportXls")]
+        public async Task<HttpResponseMessage> ExportXls(HttpRequestMessage request, string filter = null)
+        {
+            string fileName = string.Concat("Product_" + DateTime.Now.ToString("yyyyMMddhhmmsss") + ".xlsx");
+            var folderReport = ConfigHelper.GetByKey("ReportFolder");
+            string filePath = HttpContext.Current.Server.MapPath(folderReport);
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+            string fullPath = Path.Combine(filePath, fileName);
+            try
+            {
+                var data = _productService.GetListProduct(filter).ToList();
+                await ReportHelper.GenerateXls(data, fullPath);
+                return request.CreateErrorResponse(HttpStatusCode.OK, Path.Combine(folderReport, fileName));
+            }
+            catch (Exception ex)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
 
-        //[HttpGet]
-        //[Route("ExportPdf")]
-        //public async Task<HttpResponseMessage> ExportPdf(HttpRequestMessage request, int id)
-        //{
-        //    string fileName = string.Concat("Product" + DateTime.Now.ToString("yyyyMMddhhmmssfff") + ".pdf");
-        //    var folderReport = ConfigHelper.GetByKey("ReportFolder");
-        //    string filePath = HttpContext.Current.Server.MapPath(folderReport);
-        //    if (!Directory.Exists(filePath))
-        //    {
-        //        Directory.CreateDirectory(filePath);
-        //    }
-        //    string fullPath = Path.Combine(filePath, fileName);
-        //    try
-        //    {
-        //        var template = File.ReadAllText(HttpContext.Current.Server.MapPath("/Assets/admin/templates/product-detail.html"));
-        //        var replaces = new Dictionary<string, string>();
-        //        var product = _productService.GetById(id);
+        [HttpGet]
+        [Route("ExportPdf")]
+        public async Task<HttpResponseMessage> ExportPdf(HttpRequestMessage request, int id)
+        {
+            string fileName = string.Concat("Product" + DateTime.Now.ToString("yyyyMMddhhmmssfff") + ".pdf");
+            var folderReport = ConfigHelper.GetByKey("ReportFolder");
+            string filePath = HttpContext.Current.Server.MapPath(folderReport);
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+            string fullPath = Path.Combine(filePath, fileName);
+            try
+            {
+                var template = File.ReadAllText(HttpContext.Current.Server.MapPath("/Assets/admin/templates/product-detail.html"));
+                var replaces = new Dictionary<string, string>();
+                var product = _productService.GetById(id);
 
-        //        replaces.Add("{{ProductName}}", product.Name);
-        //        replaces.Add("{{Price}}", product.Price.ToString("N0"));
-        //        replaces.Add("{{Description}}", product.Description);
-        //        replaces.Add("{{Warranty}}", product.Warranty + " tháng");
+                replaces.Add("{{ProductName}}", product.Name);
+                replaces.Add("{{Price}}", product.Price.ToString("N0"));
+                replaces.Add("{{Description}}", product.Description);
+                replaces.Add("{{Warranty}}", product.Warranty + " tháng");
 
-        //        template = template.Parse(replaces);
+                template = template.Parse(replaces);
 
-        //        await ReportHelper.GeneratePdf(template, fullPath);
-        //        return request.CreateErrorResponse(HttpStatusCode.OK, Path.Combine(folderReport, fileName));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
-        //    }
-        //}
+                await ReportHelper.GeneratePdf(template, fullPath);
+                return request.CreateErrorResponse(HttpStatusCode.OK, Path.Combine(folderReport, fileName));
+            }
+            catch (Exception ex)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
         //private List<Product> ReadProductFromExcel(string fullPath, int categoryId)
         //{
         //    using (var package = new ExcelPackage(new FileInfo(fullPath)))

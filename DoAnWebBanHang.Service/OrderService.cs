@@ -12,11 +12,16 @@ namespace DoAnWebBanHang.Service
 {
     public interface IOrderService
     {
+        Order Delete(int id);
         IEnumerable<Order> GetAll();
-
         IEnumerable<Order> GetAll(string keyword);
+        Order GetById(int id);
+        IEnumerable<Order> GetListOrder(string keyword);
+        IEnumerable<OrderDetail> GetListOrderDetails();
         bool Create(Order order, List<OrderDetail> orderDetails);
         IEnumerable<RevenueStatisticViewModel> GetRevenueStatistics(int toDate, int fromDate);
+        IEnumerable<OrderDetail> GetOrderDetailsByOrderId(int id);
+        void Save();
     }
     public class OrderService : IOrderService
     {
@@ -50,6 +55,16 @@ namespace DoAnWebBanHang.Service
             }
         }
 
+        public Order Delete(int id)
+        {
+            var orderDetails = _orderDetailRepository.GetOrderDetailsByOrderId(id);
+            foreach (var item in orderDetails.ToList())
+            {
+                _orderDetailRepository.Delete(item);
+            }
+            return _orderRepository.Delete(id);
+        }
+
         public IEnumerable<Order> GetAll()
         {
             return _orderRepository.GetAll();
@@ -63,9 +78,39 @@ namespace DoAnWebBanHang.Service
                 return _orderRepository.GetAll();
         }
 
+        public Order GetById(int id)
+        {
+            return _orderRepository.GetSingleById(id);
+        }
+
+        public IEnumerable<Order> GetListOrder(string keyword)
+        {
+            IEnumerable<Order> query;
+            if (!string.IsNullOrEmpty(keyword))
+                query = _orderRepository.GetMulti(x => x.CustomerName.Contains(keyword));
+            else
+                query = _orderRepository.GetAll();
+            return query;
+        }
+
+        public IEnumerable<OrderDetail> GetListOrderDetails()
+        {
+            return _orderDetailRepository.GetAll();
+        }
+
+        public IEnumerable<OrderDetail> GetOrderDetailsByOrderId(int id)
+        {
+            return _orderDetailRepository.GetOrderDetailsByOrderId(id);
+        }
+
         public IEnumerable<RevenueStatisticViewModel> GetRevenueStatistics(int toDate, int fromDate)
         {
             return _orderRepository.GetRevenueStatistic(toDate, fromDate);
+        }
+
+        public void Save()
+        {
+            _unitOfWork.Commit();
         }
     }
 }
