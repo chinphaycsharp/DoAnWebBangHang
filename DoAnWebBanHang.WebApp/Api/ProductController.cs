@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DoAnWebBanHang.Common;
+using DoAnWebBanHang.Data.Repositories;
 using DoAnWebBanHang.Model.Models;
 using DoAnWebBanHang.Service;
 using DoAnWebBanHang.WebApp.Infastructure.Core;
@@ -26,8 +27,7 @@ namespace DoAnWebBanHang.WebApp.Api
         #region Initialize
         private IProductService _productService;
 
-        public ProductController(IErrorService errorService, IProductService productService)
-            : base(errorService)
+        public ProductController(IErrorService errorService, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository, IProductService productService) : base(errorService, applicationRoleRepository, applicationGroupRepository)
         {
             this._productService = productService;
         }

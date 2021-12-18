@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DoAnWebBanHang.Data.Repositories;
 using DoAnWebBanHang.Model.Models;
 using DoAnWebBanHang.Service;
 using DoAnWebBanHang.WebApp.Infastructure.Core;
@@ -19,8 +20,8 @@ namespace DoAnWebBanHang.WebApp.Api
     public class OrderController : ApiControllerBase
     {
         IOrderService _orderService;
-        public OrderController(IErrorService errorService, IOrderService orderService) :
-        base(errorService)
+        public OrderController(IErrorService errorService, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository, IOrderService orderService) :
+         base(errorService, applicationRoleRepository, applicationGroupRepository)
         {
             this._orderService = orderService;
         }

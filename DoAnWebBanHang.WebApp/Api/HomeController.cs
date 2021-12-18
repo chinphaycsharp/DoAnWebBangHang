@@ -27,8 +27,8 @@ namespace DoAnWebBanHang.WebApp.Api
         private IApplicationGroupService _appGroupService;
         private IApplicationRoleGroupRepository _applicationRoleGroupRepository;
 
-        public HomeController(IErrorService errorService, IProductService productService, IOrderService orderService, IUserService userService, IOrderDetailService orderDetailService ,IApplicationGroupService appGroupService
-            , IApplicationRoleGroupRepository applicationRoleGroupRepository) : base(errorService)
+        public HomeController(IErrorService errorService, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository, IProductService productService, IOrderService orderService, IUserService userService, IOrderDetailService orderDetailService ,IApplicationGroupService appGroupService
+            , IApplicationRoleGroupRepository applicationRoleGroupRepository) : base(errorService, applicationRoleRepository, applicationGroupRepository)
         {
             this._errorService = errorService;
             this._productService = productService;

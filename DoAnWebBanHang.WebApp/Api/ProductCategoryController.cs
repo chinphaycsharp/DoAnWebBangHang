@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DoAnWebBanHang.Data.Repositories;
 using DoAnWebBanHang.Model.Models;
 using DoAnWebBanHang.Service;
 using DoAnWebBanHang.WebApp.Infastructure.Core;
@@ -21,8 +22,8 @@ namespace DoAnWebBanHang.WebApp.Api
         #region Initialize
         private IProductCategoryService _productCategoryService;
 
-        public ProductCategoryController(IErrorService errorService, IProductCategoryService productCategoryService)
-            : base(errorService)
+        public ProductCategoryController(IErrorService errorService, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository, IProductCategoryService productCategoryService)
+            : base(errorService, applicationRoleRepository, applicationGroupRepository)
         {
             this._productCategoryService = productCategoryService;
         }
@@ -49,6 +50,10 @@ namespace DoAnWebBanHang.WebApp.Api
         [HttpGet]
         public HttpResponseMessage GetAll(HttpRequestMessage request ,string keyWord, int page , int pageSize = 20)
         {
+            if(!checkAdmin("ViewProductCategory"))
+            {
+                return request.CreateResponse(HttpStatusCode.Unauthorized,"Bạn không có quyền thực hiện thao tác này");
+            }
             return CreateHttpResponse(request, () =>
             {
                 int totalRow = 0;

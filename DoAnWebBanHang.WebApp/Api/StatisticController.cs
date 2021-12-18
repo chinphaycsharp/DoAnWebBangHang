@@ -1,4 +1,5 @@
-﻿using DoAnWebBanHang.Service;
+﻿using DoAnWebBanHang.Data.Repositories;
+using DoAnWebBanHang.Service;
 using DoAnWebBanHang.WebApp.Infastructure.Core;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace DoAnWebBanHang.WebApp.Api
     public class StatisticController : ApiControllerBase
     {
         IStatisticService _statisticService;
-        public StatisticController(IErrorService errorService, IStatisticService statisticService) : base(errorService)
+        public StatisticController(IErrorService errorService, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository, IStatisticService statisticService) : base(errorService, applicationRoleRepository, applicationGroupRepository)
         {
             _statisticService = statisticService;
         }
