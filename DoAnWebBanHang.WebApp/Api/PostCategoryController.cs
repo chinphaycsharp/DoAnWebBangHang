@@ -64,16 +64,22 @@ namespace DoAnWebBanHang.WebApp.Api
                 var response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
                 return response;
             });
-            //return CreateHttpResponse(request, () =>
-            //{
-            //    var listCategory = _postCategoryService.GetAll();
+        }
 
-            //    var listPostCategoryVm = Mapper.Map<List<PostCategoryViewModel>>(listCategory);
+        [Route("getbyid/{id:int}")]
+        [HttpGet]
+        public HttpResponseMessage GetById(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                var model = _postCategoryService.GetById(id);
 
-            //    HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, listPostCategoryVm);
+                var responseData = Mapper.Map<PostCategory, PostCategoryViewModel>(model);
 
-            //    return response;
-            //});
+                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
+
+                return response;
+            });
         }
 
         [Route("add")]
