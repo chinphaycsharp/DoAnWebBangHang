@@ -42,6 +42,23 @@ namespace DoAnWebBanHang.WebApp.Api
             });
         }
 
+
+        [Route("getbyid/{id:int}")]
+        [HttpGet]
+        public HttpResponseMessage GetById(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                var model = _postService.GetById(id);
+
+                var responseData = Mapper.Map<Post, PostViewModel>(model);
+
+                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
+
+                return response;
+            });
+        }
+
         [Route("getall")]
         public HttpResponseMessage Get(HttpRequestMessage request,  int page, int pageSize = 20)
         {
@@ -66,16 +83,6 @@ namespace DoAnWebBanHang.WebApp.Api
                 var response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
                 return response;
             });
-            //return CreateHttpResponse(request, () =>
-            //{
-            //    var listCategory = _postCategoryService.GetAll();
-
-            //    var listPostCategoryVm = Mapper.Map<List<PostCategoryViewModel>>(listCategory);
-
-            //    HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, listPostCategoryVm);
-
-            //    return response;
-            //});
         }
 
         [Route("add")]

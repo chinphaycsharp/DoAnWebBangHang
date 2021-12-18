@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using System.Web.Security;
 
 namespace DoAnWebBanHang.WebApp.Api
 {
@@ -66,6 +67,7 @@ namespace DoAnWebBanHang.WebApp.Api
 
         [Route("getall")]
         [HttpGet]
+        [Authorize(Roles = "ViewUser")]
         public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword, int page, int pageSize = 20)
         {
             return CreateHttpResponse(request, () =>
