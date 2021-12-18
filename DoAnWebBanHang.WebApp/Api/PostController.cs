@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DoAnWebBanHang.Data.Repositories;
 using DoAnWebBanHang.Model.Models;
 using DoAnWebBanHang.Service;
 using DoAnWebBanHang.WebApp.Infastructure.Core;
@@ -20,8 +21,8 @@ namespace DoAnWebBanHang.WebApp.Api
     {
         IPostService _postService;
         IPostCategoryService _postCategoryService;
-        public PostController(IErrorService errorService, IPostService postService, IPostCategoryService postCategoryService) :
-            base(errorService)
+        public PostController(IErrorService errorService, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository, IPostService postService, IPostCategoryService postCategoryService) :
+             base(errorService, applicationRoleRepository, applicationGroupRepository)
         {
             this._postService = postService;
             this._postCategoryService = postCategoryService;

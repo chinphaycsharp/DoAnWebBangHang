@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DoAnWebBanHang.Data.Repositories;
 using DoAnWebBanHang.Model.Models;
 using DoAnWebBanHang.Service;
 using DoAnWebBanHang.WebApp.Infastructure.Core;
@@ -19,8 +20,8 @@ namespace DoAnWebBanHang.WebApp.Api
     {
         IPostCategoryService _postCategoryService;
 
-        public PostCategoryController(IErrorService errorService, IPostCategoryService postCategoryService) :
-            base(errorService)
+        public PostCategoryController(IErrorService errorService, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository, IPostCategoryService postCategoryService) :
+             base(errorService, applicationRoleRepository, applicationGroupRepository)
         {
             this._postCategoryService = postCategoryService;
         }
@@ -30,6 +31,10 @@ namespace DoAnWebBanHang.WebApp.Api
         [HttpGet]
         public HttpResponseMessage GetAll(HttpRequestMessage request)
         {
+            //if(!checkAdmin())
+            //{
+            //    return request.CreateResponse(HttpStatusCode.BadRequest, "Bạn không có quyền truy cập"); 
+            //}
             return CreateHttpResponse(request, () =>
             {
                 var model = _postCategoryService.GetAll();
@@ -44,6 +49,10 @@ namespace DoAnWebBanHang.WebApp.Api
         [Route("getall")]
         public HttpResponseMessage Get(HttpRequestMessage request, string keyWord, int page, int pageSize = 20)
         {
+            //if (!checkAdmin())
+            //{
+            //    return request.CreateResponse(HttpStatusCode.BadRequest, "Bạn không có quyền truy cập");
+            //}
             return CreateHttpResponse(request, () =>
             {
                 int totalRow = 0;
@@ -70,6 +79,10 @@ namespace DoAnWebBanHang.WebApp.Api
         [HttpGet]
         public HttpResponseMessage GetById(HttpRequestMessage request, int id)
         {
+            //if (!checkAdmin())
+            //{
+            //    return request.CreateResponse(HttpStatusCode.BadRequest, "Bạn không có quyền truy cập");
+            //}
             return CreateHttpResponse(request, () =>
             {
                 var model = _postCategoryService.GetById(id);
@@ -85,6 +98,10 @@ namespace DoAnWebBanHang.WebApp.Api
         [Route("add")]
         public HttpResponseMessage Post(HttpRequestMessage request, PostCategoryViewModel postCategory)
         {
+            //if (!checkAdmin())
+            //{
+            //    return request.CreateResponse(HttpStatusCode.BadRequest, "Bạn không có quyền truy cập");
+            //}
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage respone = null;
@@ -109,6 +126,10 @@ namespace DoAnWebBanHang.WebApp.Api
         [Route("update")]
         public HttpResponseMessage Put(HttpRequestMessage request, PostCategory postCategory)
         {
+            //if (!checkAdmin(""))
+            //{
+            //    return request.CreateResponse(HttpStatusCode.BadRequest, "Bạn không có quyền truy cập");
+            //}
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage respone = null;
@@ -130,6 +151,10 @@ namespace DoAnWebBanHang.WebApp.Api
         [Route("remove")]
         public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
+            if (!checkAdmin("ViewProductCategory"))
+            {
+                return request.CreateResponse(HttpStatusCode.BadRequest, "Bạn không có quyền truy cập");
+            }
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage respone = null;

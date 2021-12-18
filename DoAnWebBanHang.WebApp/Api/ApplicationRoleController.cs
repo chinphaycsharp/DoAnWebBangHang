@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DoAnWebBanHang.Common.Exceptions;
+using DoAnWebBanHang.Data.Repositories;
 using DoAnWebBanHang.Model.Models;
 using DoAnWebBanHang.Service;
 using DoAnWebBanHang.WebApp.Infastructure.Core;
@@ -21,8 +22,8 @@ namespace DoAnWebBanHang.WebApp.Api
     {
         private IApplicationRoleService _appRoleService;
 
-        public ApplicationRoleController(IErrorService errorService,
-            IApplicationRoleService appRoleService) : base(errorService)
+        public ApplicationRoleController(IErrorService errorService, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository,
+            IApplicationRoleService appRoleService) : base(errorService, applicationRoleRepository, applicationGroupRepository)
         {
             _appRoleService = appRoleService;
         }

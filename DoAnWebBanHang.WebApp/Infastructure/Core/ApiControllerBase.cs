@@ -8,16 +8,22 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
+using DoAnWebBanHang.Common;
+using DoAnWebBanHang.Data.Repositories;
 
 namespace DoAnWebBanHang.WebApp.Infastructure.Core
 {
     public class ApiControllerBase : ApiController
     {
         private IErrorService _errorService;
-
-        public ApiControllerBase(IErrorService errorService)
+        private IApplicationGroupRepository _applicationGruopRepository;
+        private IApplicationRoleRepository _applicationRoleRepository;
+        public ApiControllerBase(IErrorService errorService, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository)
         {
             this._errorService = errorService;
+            this._applicationGruopRepository = applicationGroupRepository;
+            this._applicationRoleRepository = applicationRoleRepository;
         }
 
         protected HttpResponseMessage CreateHttpResponse(HttpRequestMessage requestMessage, Func<HttpResponseMessage> function)
@@ -67,6 +73,22 @@ namespace DoAnWebBanHang.WebApp.Infastructure.Core
             catch
             {
             }
+        }
+
+        protected bool checkAdmin(string role)
+        {
+            var applicationGroupService = ServiceFactory.Get<IApplicationGroupService>();
+            var listGroup = applicationGroupService.GetListGroupByUserId(User.Identity.GetUserId());
+            foreach (var item in listGroup)
+            {
+                var groups = _applicationGruopRepository.GetGroupByName(item.Name);
+                var roles = _applicationRoleRepository.GetListRoleByGroupId(groups.ID);
+                if (roles.Any(x => x.Name == role))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
