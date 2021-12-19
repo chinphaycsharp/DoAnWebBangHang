@@ -205,10 +205,20 @@ namespace DoAnWebBanHang.WebApp.Controllers
                     MailHelper.SendMail(order.CustomerEmail, "Thanh toán đơn hàng", content);
                 }
 
+                var last = _orderService.GetLastOrder();
+
+                var obj = new OrderResult()
+                {
+                    status = true,
+                    price = price.ToString(),
+                    code = last.ID.ToString(),
+                    method = last.PaymentMethod,
+                    time = last.CreatedDate
+                };
 
                 return Json(new
                 {
-                    status = true
+                    result = obj
                 });
             }
             else

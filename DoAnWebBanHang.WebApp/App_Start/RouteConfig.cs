@@ -63,6 +63,13 @@ namespace DoAnWebBanHang.WebApp
                       namespaces: new string[] { "DoAnWebBanHang.Web.Controllers" }
                   );
 
+           routes.MapRoute(
+          name: "ProductAll",
+          url: "san-pham.html",
+          defaults: new { controller = "Product", action = "ListAllProduct", alias = UrlParameter.Optional },
+          namespaces: new string[] { "DoAnWebBanHang.Web.Controllers" }
+      );
+
 
             routes.MapRoute(
              name: "Product Category",

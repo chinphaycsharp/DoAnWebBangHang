@@ -18,6 +18,7 @@ namespace DoAnWebBanHang.WebApp.Mappings
             Mapper.CreateMap<PostCategory, PostCategoryViewModel>();
             Mapper.CreateMap<Tag, TagViewModel>();
             Mapper.CreateMap<Order, OrderViewModel>();
+            Mapper.CreateMap<OrderDetail, OrderDetailViewModel>();
             Mapper.CreateMap<ProductCategory, ProductCategoryViewModel>();
             Mapper.CreateMap<Product, ProductViewModel>();
             Mapper.CreateMap<ProductTag, ProductTagViewModel>();

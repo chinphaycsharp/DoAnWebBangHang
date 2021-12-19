@@ -135,12 +135,16 @@
                 orderViewModel: JSON.stringify(order)
             },
             success: function (response) {
-                if (response.status) {
-                    console.log('create order ok');
+                if (response) {
+                    console.log(response);
                     $('#divCheckout').hide();
                     cart.deleteAll();
                     setTimeout(function () {
-                        $('#cartContent').html('Cảm ơn bạn đã đặt hàng thành công. Chúng tôi sẽ liên hệ sớm nhất.');
+                        $('#cartContent').html(`Cảm ơn bạn đã thanh toán thành công</br>
+                                                M-${response.result.code}</br>
+                                                ${response.result.method}</br>
+                                                ${response.result.price}VND</br>
+                                                Chúng tôi sẽ liên hệ sớm nhất.`);
                     }, 2000);
 
                 }
