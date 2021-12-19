@@ -11,6 +11,7 @@ namespace DoAnWebBanHang.Data.Repositories
     public interface IOrderDetailRepository : IRepository<OrderDetail>
     {
         IEnumerable<OrderDetail> GetOrderDetailsByOrderId(int orderId);
+
     }
 
     public class OrderDetailRepository : RepositoryBase<OrderDetail>, IOrderDetailRepository

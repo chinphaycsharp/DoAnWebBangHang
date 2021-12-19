@@ -13,12 +13,19 @@ namespace DoAnWebBanHang.Data.Repositories
     public interface IOrderRepository : IRepository<Order>
     {
         IEnumerable<RevenueStatisticViewModel> GetRevenueStatistic(int fromDate, int toDate);
+        Order GetOrderLast();
     }
 
     public class OrderRepository : RepositoryBase<Order>, IOrderRepository
     {
         public OrderRepository(IDbFactory dbFactory) : base(dbFactory)
         {
+        }
+
+        public Order GetOrderLast()
+        {
+            var lst = DbContext.Orders.ToList().LastOrDefault();
+            return lst;
         }
 
         public IEnumerable<RevenueStatisticViewModel> GetRevenueStatistic(int fromDate, int toDate)

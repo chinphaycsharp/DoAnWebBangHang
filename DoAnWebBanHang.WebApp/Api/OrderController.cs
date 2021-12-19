@@ -32,11 +32,30 @@ namespace DoAnWebBanHang.WebApp.Api
         {
             return CreateHttpResponse(request, () =>
             {
-                var model = _orderService.GetById(id);
+                var model = _orderService.GetOrderDetailsByOrderId(id);
+                var order = _orderService.GetById(id);
+                ListOrderDetail listOrder = new ListOrderDetail();
+                List<OrderDetailViewModel> orderDetailViews = new List<OrderDetailViewModel>();
+                decimal totalPrice = 0;
+                var responseData = Mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailViewModel>>(model);
+                if(responseData.Count() > 0)
+                {
+                    foreach (var item in responseData)
+                    {
+                        totalPrice += item.Price;
+                        orderDetailViews.Add(item);
+                    }
+                }
+                listOrder.CustomerAddress = order.CustomerAddress;
+                listOrder.CustomerEmail = order.CustomerEmail;
+                listOrder.CustomerMobile = order.CustomerMobile;
+                listOrder.CustomerName = order.CustomerName;
+                listOrder.PaymentMethod = order.PaymentMethod;
+                listOrder.date = order.CreatedDate;
+                listOrder.TotalPrice = totalPrice;
+                listOrder.orderDetailViewModels = orderDetailViews;
 
-                var responseData = Mapper.Map<Order, OrderViewModel>(model);
-
-                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
+                var response = request.CreateResponse(HttpStatusCode.OK, listOrder);
 
                 return response;
             });

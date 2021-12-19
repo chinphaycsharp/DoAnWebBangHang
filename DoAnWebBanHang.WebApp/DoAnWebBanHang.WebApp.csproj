@@ -269,8 +269,10 @@
     <Compile Include="Models\FeedbackViewModel.cs" />
     <Compile Include="Models\FooterViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\ListOrderDetail.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\OrderDetailViewModel.cs" />
+    <Compile Include="Models\OrderResult.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\PageViewModel.cs" />
     <Compile Include="Models\PostCategoryViewModel.cs" />
@@ -5423,6 +5425,7 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\ShoppingCart\OrderHistory.cshtml" />
+    <Content Include="Views\Product\ListAllProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DoAnWebBanHang.Common\DoAnWebBanHang.Common.csproj">

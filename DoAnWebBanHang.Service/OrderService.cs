@@ -16,6 +16,7 @@ namespace DoAnWebBanHang.Service
         IEnumerable<Order> GetAll();
         IEnumerable<Order> GetAll(string keyword);
         Order GetById(int id);
+        Order GetLastOrder();
         IEnumerable<Order> GetListOrder(string keyword);
         IEnumerable<OrderDetail> GetListOrderDetails();
         bool Create(Order order, List<OrderDetail> orderDetails);
@@ -81,6 +82,11 @@ namespace DoAnWebBanHang.Service
         public Order GetById(int id)
         {
             return _orderRepository.GetSingleById(id);
+        }
+
+        public Order GetLastOrder()
+        {
+            return _orderRepository.GetOrderLast();
         }
 
         public IEnumerable<Order> GetListOrder(string keyword)
