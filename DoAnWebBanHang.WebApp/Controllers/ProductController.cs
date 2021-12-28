@@ -36,8 +36,6 @@ namespace DoAnWebBanHang.WebApp.Controllers
 
             ViewBag.Tags = Mapper.Map<IEnumerable<Tag>, IEnumerable<TagViewModel>>(_productService.GetListTagByProductId(productId));
             return View(viewModel);
-
-            //return View();
         }
 
         public ActionResult ListAllProduct(string tagId, int page = 1)

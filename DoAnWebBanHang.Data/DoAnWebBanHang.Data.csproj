@@ -97,6 +97,22 @@
     <Compile Include="Migrations\202111230352089_add-property-usermember.Designer.cs">
       <DependentUpon>202111230352089_add-property-usermember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112201614142_users.cs" />
+    <Compile Include="Migrations\202112201614142_users.Designer.cs">
+      <DependentUpon>202112201614142_users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112201627388_update-users.cs" />
+    <Compile Include="Migrations\202112201627388_update-users.Designer.cs">
+      <DependentUpon>202112201627388_update-users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112201639053_update-usersV2.cs" />
+    <Compile Include="Migrations\202112201639053_update-usersV2.Designer.cs">
+      <DependentUpon>202112201639053_update-usersV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112201657030_update-usersV3.cs" />
+    <Compile Include="Migrations\202112201657030_update-usersV3.Designer.cs">
+      <DependentUpon>202112201657030_update-usersV3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationGroupRepository.cs" />
@@ -164,6 +180,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111230352089_add-property-usermember.resx">
       <DependentUpon>202111230352089_add-property-usermember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112201614142_users.resx">
+      <DependentUpon>202112201614142_users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112201627388_update-users.resx">
+      <DependentUpon>202112201627388_update-users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112201639053_update-usersV2.resx">
+      <DependentUpon>202112201639053_update-usersV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112201657030_update-usersV3.resx">
+      <DependentUpon>202112201657030_update-usersV3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

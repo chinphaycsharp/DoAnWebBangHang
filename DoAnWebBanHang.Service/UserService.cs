@@ -14,14 +14,19 @@ namespace DoAnWebBanHang.Service
     public interface IUserService
     {
         IEnumerable<ApplicationUser> GetAll();
-
+        void Save();
         IEnumerable<ApplicationUser> GetAll(string keyword);
+        void UpDate(ApplicationUser user);
+        ApplicationUser FindUser(string userName, string password);
 
         IEnumerable<TopUserOrdersViewModel> GetTopUserOrders();
 
         ApplicationUser getCurrentUser(string username);
+        ApplicationUser getCurrentUserById(string id);
 
         IEnumerable<ApplicationUser> GetUserNotAdmin();
+
+        IEnumerable<ApplicationUser> GetUserIsAdmin();
     }
 
     public class UserService : IUserService
@@ -42,6 +47,12 @@ namespace DoAnWebBanHang.Service
             this._orderService = orderService;
             this._applicationUser = applicationUser;
         }
+
+        public ApplicationUser FindUser(string userName, string password)
+        {
+            return _applicationUser.FindUser(userName, password);
+        }
+
         public IEnumerable<ApplicationUser> GetAll()
         {
             return _applicationUserRepository.GetAll();
@@ -59,6 +70,12 @@ namespace DoAnWebBanHang.Service
         {
             var users = _applicationUserRepository.GetAll();
             return users.Single(x => x.UserName.Equals(username) );
+        }
+
+        public ApplicationUser getCurrentUserById(string id)
+        {
+            var users = _applicationUserRepository.GetAll();
+            return users.Single(x => x.Id == id);
         }
 
         public IEnumerable<TopUserOrdersViewModel> GetTopUserOrders()
@@ -80,11 +97,28 @@ namespace DoAnWebBanHang.Service
             return result;
         }
 
+        public IEnumerable<ApplicationUser> GetUserIsAdmin()
+        {
+            var adminGroup = _applicationGruopRepository.GetGroupByName(CommonConstants.Admin);
+            var userNotAdmin = _applicationGruopRepository.GetListUserByGroupId(adminGroup.ID);
+            return userNotAdmin;
+        }
+
         public IEnumerable<ApplicationUser> GetUserNotAdmin()
         {
             var adminGroup = _applicationGruopRepository.GetGroupByName(CommonConstants.Admin);
             var userNotAdmin = _applicationGruopRepository.GetListUserByGroupIdNotAdmin(adminGroup.ID);
             return userNotAdmin;
+        }
+
+        public void Save()
+        {
+            _unitOfWork.Commit();
+        }
+
+        public void UpDate(ApplicationUser user)
+        {
+            _applicationUser.Update(user);
         }
     }
 }

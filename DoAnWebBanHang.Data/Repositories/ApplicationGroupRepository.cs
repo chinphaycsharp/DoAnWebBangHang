@@ -2,6 +2,7 @@
 using DoAnWebBanHang.Model.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace DoAnWebBanHang.Data.Repositories
         IEnumerable<ApplicationUser> GetListUserByGroupId(int groupId);
         IEnumerable<ApplicationUser> GetListUserByGroupIdNotAdmin(int groupId);
         ApplicationGroup GetGroupByName(string groupName);
+
     }
     public class ApplicationGroupRepository : RepositoryBase<ApplicationGroup>, IApplicationGroupRepository
     {
@@ -38,29 +40,25 @@ namespace DoAnWebBanHang.Data.Repositories
             return query;
         }
 
-        public IEnumerable<ApplicationUser> GetListUserByGroupId(int groupId)
+        public IEnumerable<ApplicationUser> GetListUserByGroupId(int GruopId)
         {
-            var query = from g in DbContext.ApplicationGroups
-                        join ug in DbContext.ApplicationUserGroups
-                        on g.ID equals ug.GroupId
-                        join u in DbContext.Users
-                        on ug.UserId equals u.Id
-                        where ug.GroupId == groupId
-                        select u;
-            return query;
+            var parameter = new SqlParameter[]
+            {
+                new SqlParameter("@GruopId",GruopId)
+            };
+
+            return DbContext.Database.SqlQuery<ApplicationUser>("GetUserIsAdmin @GroupId", parameter);
         }
 
-        public IEnumerable<ApplicationUser> GetListUserByGroupIdNotAdmin(int groupId)
+        public IEnumerable<ApplicationUser> GetListUserByGroupIdNotAdmin(int GruopId)
         {
-            var query = from g in DbContext.ApplicationGroups
-                        join ug in DbContext.ApplicationUserGroups
-                        on g.ID equals ug.GroupId
-                        join u in DbContext.Users
-                        on ug.UserId equals u.Id
-                        where ug.GroupId != groupId
-                        select u;
-            var result = query.ToList();
-            return query;
+            var parameter = new SqlParameter[]
+            {
+                new SqlParameter("@GruopId",GruopId),
+                new SqlParameter("@isMember",true),
+            };
+
+            return DbContext.Database.SqlQuery<ApplicationUser>("GetUserNotAdmin @GroupId,@isMember", parameter);
         }
     }
 }

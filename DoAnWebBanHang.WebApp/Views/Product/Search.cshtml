@@ -40,9 +40,11 @@
                             </div>
                         </a>
                     </div>
-                    <h4><a href="@url">@product.Name</a></h4>
-                    <p>@product.Description</p>
-                    @(product.Price == 0 ? "Liên hệ" : product.Price.ToString("N2"))
+                    <div>
+                        <h4><a href="@url">@product.Name</a></h4>
+                        <p>@product.Description</p>
+                        @(product.Price == 0 ? "Liên hệ" : product.Price.ToString("N2"))
+                    </div>
                 </div>
             }
             <div class="clearfix"> </div>

@@ -21,6 +21,22 @@ namespace DoAnWebBanHang.WebApp
             );
 
             routes.MapRoute(
+              name: "PostDetail",
+              url: "bai-viet-{id}.html",
+              defaults: new { controller = "Post", action = "Detail", id = UrlParameter.Optional },
+              namespaces: new string[] { "DoAnWebBanHang.WebApp.Controllers" }
+            );
+
+            routes.MapRoute(
+              name: "Post",
+              url: "bai-viet.html",
+              defaults: new { controller = "Post", action = "Index", id = UrlParameter.Optional },
+              namespaces: new string[] { "DoAnWebBanHang.WebApp.Controllers" }
+            );
+
+
+
+            routes.MapRoute(
               name: "Search",
               url: "tim-kiem.html",
               defaults: new { controller = "Product", action = "Search", id = UrlParameter.Optional },
@@ -63,12 +79,12 @@ namespace DoAnWebBanHang.WebApp
                       namespaces: new string[] { "DoAnWebBanHang.Web.Controllers" }
                   );
 
-           routes.MapRoute(
-          name: "ProductAll",
-          url: "san-pham.html",
-          defaults: new { controller = "Product", action = "ListAllProduct", alias = UrlParameter.Optional },
-          namespaces: new string[] { "DoAnWebBanHang.Web.Controllers" }
-      );
+               routes.MapRoute(
+              name: "ProductAll",
+              url: "san-pham.html",
+              defaults: new { controller = "Product", action = "ListAllProduct", alias = UrlParameter.Optional },
+              namespaces: new string[] { "DoAnWebBanHang.Web.Controllers" }
+          );
 
 
             routes.MapRoute(
