@@ -158,8 +158,8 @@ namespace DoAnWebBanHang.WebApp.Infastructure.Extensions
 
         public static void UpdateUser(this ApplicationUser appUser, ApplicationUserViewModel appUserViewModel, string action = "add")
         {
-
-            appUser.Id = appUserViewModel.Id;
+            appUser.PasswordHash = appUserViewModel.PasswordHash;
+            appUser.Address = appUserViewModel.Address;
             appUser.FullName = appUserViewModel.FullName;
             appUser.BirthDay = appUserViewModel.BirthDay;
             appUser.Email = appUserViewModel.Email;

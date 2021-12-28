@@ -5050,6 +5050,7 @@
     <Content Include="Assets\Client\images\zoom.png" />
     <Content Include="Assets\Client\js\common.js" />
     <Content Include="Assets\Client\js\controllers\contact.js" />
+    <Content Include="Assets\Client\js\controllers\inforUser.js" />
     <Content Include="Assets\Client\js\controllers\shoppingCart.js" />
     <Content Include="Assets\Client\js\jquery.etalage.min.js" />
     <Content Include="Assets\Client\js\jquery.flexisel.js" />
@@ -5082,7 +5083,6 @@
     <Folder Include="Reports\" />
     <Folder Include="Views\About\" />
     <Folder Include="Views\Order\" />
-    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -5415,7 +5415,6 @@
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Product\Category.cshtml" />
     <Content Include="Views\Product\Search.cshtml" />
-    <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Product\ListByTag.cshtml" />
     <Content Include="Views\Page\Index.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
@@ -5426,6 +5425,10 @@
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\ShoppingCart\OrderHistory.cshtml" />
     <Content Include="Views\Product\ListAllProduct.cshtml" />
+    <Content Include="Views\Home\GetInformationUser.cshtml" />
+    <Content Include="Views\Post\Index.cshtml" />
+    <Content Include="Views\Post\Detail.cshtml" />
+    <Content Include="Views\Product\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DoAnWebBanHang.Common\DoAnWebBanHang.Common.csproj">

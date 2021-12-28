@@ -44,15 +44,16 @@ namespace DoAnWebBanHang.WebApp.Api
 
         [Route("getlistpaging")]
         [HttpGet]
-        [Authorize(Roles = "ViewUser")]
-        public HttpResponseMessage GetListPaging(HttpRequestMessage request, int page, int pageSize, string filter = null)
+        public HttpResponseMessage GetUserIsAdmin(HttpRequestMessage request, int page, int pageSize, string filter = null)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
                 int totalRow = 0;
-                var model = _userManager.Users;
+                var model = _userService.GetUserIsAdmin();
+                var m = model.ToList();
                 IEnumerable<ApplicationUserViewModel> modelVm = Mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<ApplicationUserViewModel>>(model);
+
 
                 PaginationSet<ApplicationUserViewModel> pagedSet = new PaginationSet<ApplicationUserViewModel>()
                 {
@@ -70,7 +71,6 @@ namespace DoAnWebBanHang.WebApp.Api
 
         [Route("getlistpagiNotAdmin")]
         [HttpGet]
-        [Authorize(Roles = "ViewUser")]
         public HttpResponseMessage GetListPagingNotAdmin(HttpRequestMessage request, int page, int pageSize, string filter = null)
         {
             return CreateHttpResponse(request, () =>
@@ -145,7 +145,7 @@ namespace DoAnWebBanHang.WebApp.Api
                 try
                 {
                     newAppUser.Id = Guid.NewGuid().ToString();
-                    var result = await _userManager.CreateAsync(newAppUser, applicationUserViewModel.Password);
+                    var result = await _userManager.CreateAsync(newAppUser, applicationUserViewModel.PasswordHash);
                     if (result.Succeeded)
                     {
                         var listAppUserGroup = new List<ApplicationUserGroup>();

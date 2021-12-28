@@ -12,9 +12,9 @@ namespace DoAnWebBanHang.WebApp.Models
         public DateTime BirthDay { set; get; }
         public string Bio { set; get; }
         public string Email { set; get; }
-        public string Password { set; get; }
+        public string PasswordHash { set; get; }
         public string UserName { set; get; }
-
+        public string Address { get; set; }
         public string PhoneNumber { set; get; }
 
         public IEnumerable<ApplicationGroupViewModel> Groups { set; get; }

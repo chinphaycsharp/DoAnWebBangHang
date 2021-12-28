@@ -70,7 +70,8 @@ namespace DoAnWebBanHang.Service
 
         public IEnumerable<Post> GetAllByCategoryPaging(int categoryId, int page, int pageSize, out int totalRow)
         {
-            return _postReposiotry.GetMultiPaging(x => x.Status == true && x.CategoryID == categoryId, out totalRow, page, pageSize, new string[] { "PostCategory"});
+            var result = _postReposiotry.getPostByCateId(categoryId, page, pageSize ,out totalRow);
+            return result;
         }
 
         public IEnumerable<Post> GetAllByTagPaging(string tag, int page, int pageSize, out int totalRow)

@@ -1,6 +1,7 @@
 ﻿using BotDetect.Web.Mvc;
 using DoAnWebBanHang.Common;
 using DoAnWebBanHang.Model.Models;
+using DoAnWebBanHang.Service;
 using DoAnWebBanHang.WebApp.App_Start;
 using DoAnWebBanHang.WebApp.Models;
 using Microsoft.AspNet.Identity;
@@ -20,11 +21,14 @@ namespace DoAnWebBanHang.WebApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        
+        IUserService _userService;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _userService = userService;
         }
 
         public ApplicationSignInManager SignInManager

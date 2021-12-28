@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/Layouts.cshtml";
+}
+
+<div class="single_top">
+    <div class="single_grid">
+        <div class="grid images_3_of_2">
+
+            <img src="@Model.Image" />
+            <div class="clearfix"> </div>
+        </div>
+        <div class="desc1 span_3_of_2">
+            <h4>@Model.Name</h4>
+           
+            <div class="tag">
+                <h5>Tag : <a> @Model.Alias</a></h5>
+                <h5>Số lượt xem : <a> @Model.ViewCount</a></h5>
+            </div>
+            <div class="clearfix"></div>
+            <div class="share">
+                <h5>Chia sẻ :</h5>
+
+                <ul class="share_nav">
+                    <li><a href="#"><img src="/Assets/client/images/facebook.png" title="facebook"></a></li>
+                    <li><a href="#"><img src="/Assets/client/images/twitter.png" title="Twiiter"></a></li>
+                    <li><a href="#"><img src="/Assets/client/images/rss.png" title="Rss"></a></li>
+                    <li><a href="#"><img src="/Assets/client/images/gpluse.png" title="Google+"></a></li>
+                </ul>
+
+            </div>
+
+
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+
+    <div class="toogle">
+        <p class="m_text">@Html.Raw(Model.Content)</p>
+    </div>
+</div>

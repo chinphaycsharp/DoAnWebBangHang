@@ -46,14 +46,17 @@ namespace DoAnWebBanHang.WebApp.Api
                         orderDetailViews.Add(item);
                     }
                 }
-                listOrder.CustomerAddress = order.CustomerAddress;
-                listOrder.CustomerEmail = order.CustomerEmail;
-                listOrder.CustomerMobile = order.CustomerMobile;
-                listOrder.CustomerName = order.CustomerName;
-                listOrder.PaymentMethod = order.PaymentMethod;
-                listOrder.date = order.CreatedDate;
-                listOrder.TotalPrice = totalPrice;
-                listOrder.orderDetailViewModels = orderDetailViews;
+                if(order != null)
+                {
+                    listOrder.CustomerAddress = order.CustomerAddress;
+                    listOrder.CustomerEmail = order.CustomerEmail;
+                    listOrder.CustomerMobile = order.CustomerMobile;
+                    listOrder.CustomerName = order.CustomerName;
+                    listOrder.PaymentMethod = order.PaymentMethod;
+                    listOrder.date = order.CreatedDate;
+                    listOrder.TotalPrice = totalPrice;
+                    listOrder.orderDetailViewModels = orderDetailViews;
+                }
 
                 var response = request.CreateResponse(HttpStatusCode.OK, listOrder);
 

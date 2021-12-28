@@ -1,25 +1,22 @@
-﻿@model DoAnWebBanHang.WebApp.Infastructure.Core.PaginationSet<DoAnWebBanHang.WebApp.Models.ProductViewModel>
-
+﻿@model DoAnWebBanHang.WebApp.Infastructure.Core.PaginationSet<DoAnWebBanHang.WebApp.Models.PostViewModel>
 @{
-    var category = (DoAnWebBanHang.WebApp.Models.ProductCategoryViewModel)ViewBag.Category;
-    var pageIndex = Model.Page;
-    ViewBag.Title = pageIndex == 1 ? category.Name : category.Name + " - Trang " + pageIndex;
-    ViewBag.MetaKeyword = pageIndex == 1 ? category.MetaKeyword : category.MetaKeyword + " - Trang " + pageIndex;
-    ViewBag.MetaDescription = pageIndex == 1 ? category.MetaDescription : category.MetaDescription + " - Trang " + pageIndex;
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/Layouts.cshtml";
-
 }
+
 
 <div class="women-product">
     <div class="w_content">
         <div class="women">
-            <a href="/@(category.Alias).pc-@(category.ID).html"><h4>@category.Name - <span>@Model.TotalCount sản phẩm</span> </h4></a>
+            <h4>Danh sách bài viết</h4>
             <ul class="w_nav">
-                <li>Sắp xếp : </li>
-                <li><a class="active" href="?page=@Model.Page&sort=popular">Phổ biến</a></li> |
-                <li><a href="?page=@Model.Page&sort=new">Mới </a></li> |
-                <li><a href="?page=@Model.Page&sort=discount">Khuyến mãi</a></li> |
-                <li><a href="?page=@Model.Page&sort=price">Giá: Thấp -> Cao </a></li>
+                <li>Lọc theo : </li>
+                <li style="display:flex">
+                    @foreach (var post in ViewBag.postCategory)
+                    {
+                        <a href="?page=@Model.Page&CateId=@post.ID">@post.Name |</a>
+                    }
+                </li> 
                 <div class="clearfix"> </div>
             </ul>
             <div class="clearfix"> </div>
@@ -30,25 +27,22 @@
     {
 
         <div class="grid-product">
-            @foreach (var product in Model.Items)
+            @foreach (var post in Model.Items)
             {
-                var url = "/" + product.Alias + ".p-" + product.ID + ".html";
+                var url = "/bai-viet" + "-" + post.ID + ".html";
                 <div class="product-grid">
                     <div class="content_box">
                         <a href="@url">
                             <div class="left-grid-view grid-view-left">
-                                <img src="@product.Image" class="img-responsive watch-right" alt="@product.Name" style="width:150px;height:200 px;" />
+                                <img src="@post.Image" class="img-responsive watch-right" alt="@post.Name" style="width:150px;height:150px;" />
                                 <div class="mask">
                                     <div class="info">Xem nhanh</div>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div>
-                        <h4><a href="@url">@product.Name</a></h4>
-                        <p>@product.Description</p>
-                        @(product.Price == 0 ? "Liên hệ" : product.Price.ToString("N2"))
-                    </div>
+                    <h4><a href="@url">@post.Name</a></h4>
+                    <p>@post.Description</p>
                 </div>
             }
             <div class="clearfix"> </div>

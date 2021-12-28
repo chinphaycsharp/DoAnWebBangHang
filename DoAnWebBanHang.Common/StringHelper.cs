@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -54,6 +56,18 @@ namespace DoAnWebBanHang.Common
                             .Aggregate(template, (current, key) => current.Replace(key, replacements[key]));
             }
             return template;
+        }
+
+        public static string ConvertStringtoMD5(string strword)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] bytes = md5.ComputeHash(new UTF8Encoding().GetBytes(input));
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                stringBuilder.Append(bytes[i].ToString("x2"));
+            }
+            return stringBuilder.ToString();
         }
     }
 }
