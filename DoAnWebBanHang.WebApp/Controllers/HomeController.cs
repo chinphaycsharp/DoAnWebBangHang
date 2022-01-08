@@ -5,19 +5,13 @@ using DoAnWebBanHang.Data.Infastructure;
 using DoAnWebBanHang.Data.Repositories;
 using DoAnWebBanHang.Model.Models;
 using DoAnWebBanHang.Service;
+using DoAnWebBanHang.Service.Models;
 using DoAnWebBanHang.WebApp.App_Start;
 using DoAnWebBanHang.WebApp.Infastructure.Extensions;
 using DoAnWebBanHang.WebApp.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DoAnWebBanHang.WebApp.Controllers
@@ -123,10 +117,38 @@ namespace DoAnWebBanHang.WebApp.Controllers
         [HttpPost]
         public async Task<IdentityResult> UpdateInformation(ApplicationUserViewModel user)
         {
-            user.PasswordHash = StringHelper.ConvertStringtoMD5(user.PasswordHash);
-            var appUser = _userManager.FindByIdAsync(User.Identity.GetUserId());
-            appUser.Result.UpdateUser(user);
-            return await _userManager.UpdateAsync(appUser.Result);
+            var appUser = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+            appUser.UpdateUser(user);
+            //_userManager.ChangePassword(appUser.Result, appUser.Result.PasswordHash)
+            return await _userManager.UpdateAsync(appUser);
+        }
+
+        [HttpGet]
+        public ActionResult UpdatePasword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdatePasword(ChangePasswordModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var appUser = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+                var result = await _userManager.ChangePasswordAsync(User.Identity.GetUserId(),user.CurrentPassword,user.NewPassword);
+                if (result.Succeeded)
+                {
+                    ViewBag.IsSuccess = true;
+                    ModelState.Clear();
+                    return View();
+                }
+                else
+                {
+                    ViewBag.Message = "Đổi mật khẩu thất bại";
+                    return View(user);
+                }
+            }
+            return View(user);
         }
     }
 }
