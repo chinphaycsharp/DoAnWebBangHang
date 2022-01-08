@@ -2,6 +2,7 @@
 using DoAnWebBanHang.Common;
 using DoAnWebBanHang.Model.Models;
 using DoAnWebBanHang.Service;
+using DoAnWebBanHang.Service.Models;
 using DoAnWebBanHang.WebApp.App_Start;
 using DoAnWebBanHang.WebApp.Models;
 using Microsoft.AspNet.Identity;
@@ -165,6 +166,7 @@ namespace DoAnWebBanHang.WebApp.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
+
         [HttpGet]
         public ActionResult Register()
         {

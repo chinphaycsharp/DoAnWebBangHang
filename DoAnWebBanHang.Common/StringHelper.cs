@@ -58,16 +58,22 @@ namespace DoAnWebBanHang.Common
             return template;
         }
 
-        public static string ConvertStringtoMD5(string strword)
+        public static string DecryptPassword(string sData) //Decode    
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            byte[] bytes = md5.ComputeHash(new UTF8Encoding().GetBytes(input));
-            for (int i = 0; i < bytes.Length; i++)
+            string hash = "f0xle@rn";
+            string result = "";
+            byte[] data = Convert.FromBase64String(sData);
+            using(MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
             {
-                stringBuilder.Append(bytes[i].ToString("x2"));
+                byte[] keys = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+                using(TripleDESCryptoServiceProvider tripleDES = new TripleDESCryptoServiceProvider())
+                {
+                    ICryptoTransform transform = tripleDES.CreateEncryptor();
+                    byte[] results = transform.TransformFinalBlock(data, 0, data.Length);
+                    result = UTF8Encoding.UTF8.GetString(results);
+                }
             }
-            return stringBuilder.ToString();
+            return result;
         }
     }
 }

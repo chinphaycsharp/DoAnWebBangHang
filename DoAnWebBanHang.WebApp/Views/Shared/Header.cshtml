@@ -35,7 +35,11 @@
               {
                   @Html.AntiForgeryToken()
                   string customerId = User.Identity.GetUserId();
-                  <a style="color:white"  href="@Url.Action("GetInformationUser", "Home")">Thông tin cá nhân</a>
+                  <a style="color:white" href="@Url.Action("GetInformationUser", "Home")">Thông tin cá nhân</a>
+              }
+              @if (Request.IsAuthenticated)
+              {
+                  <a style="color:white" href="@Url.Action("UpdatePasword", "Home")">Đổi mật khẩu</a>
               }
               <select class="in-drop">
                   <option value="English" class="in-of">English</option>

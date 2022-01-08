@@ -2,7 +2,9 @@
 using DoAnWebBanHang.Data.Infastructure;
 using DoAnWebBanHang.Data.Repositories;
 using DoAnWebBanHang.Model.Models;
+using DoAnWebBanHang.Service.Models;
 using DoAnWebBanHang.WebApp.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,6 @@ namespace DoAnWebBanHang.Service
         void Save();
         IEnumerable<ApplicationUser> GetAll(string keyword);
         void UpDate(ApplicationUser user);
-        ApplicationUser FindUser(string userName, string password);
 
         IEnumerable<TopUserOrdersViewModel> GetTopUserOrders();
 
@@ -27,6 +28,7 @@ namespace DoAnWebBanHang.Service
         IEnumerable<ApplicationUser> GetUserNotAdmin();
 
         IEnumerable<ApplicationUser> GetUserIsAdmin();
+
     }
 
     public class UserService : IUserService
@@ -48,10 +50,6 @@ namespace DoAnWebBanHang.Service
             this._applicationUser = applicationUser;
         }
 
-        public ApplicationUser FindUser(string userName, string password)
-        {
-            return _applicationUser.FindUser(userName, password);
-        }
 
         public IEnumerable<ApplicationUser> GetAll()
         {

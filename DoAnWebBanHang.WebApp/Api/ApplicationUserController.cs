@@ -168,7 +168,7 @@ namespace DoAnWebBanHang.WebApp.Api
                         _appGroupService.Save();
 
 
-                        return request.CreateResponse(HttpStatusCode.OK, applicationUserViewModel);
+                        return request.CreateResponse(HttpStatusCode.Created, applicationUserViewModel);
 
                     }
                     else
