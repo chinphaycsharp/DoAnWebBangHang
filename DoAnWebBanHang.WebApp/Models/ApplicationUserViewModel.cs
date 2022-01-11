@@ -16,7 +16,9 @@ namespace DoAnWebBanHang.WebApp.Models
         public string UserName { set; get; }
         public string Address { get; set; }
         public string PhoneNumber { set; get; }
-
+        public string VerificationToken { get; set; }
+        public string PasswordVerificationToken { get; set; }
+        public Nullable<DateTime> DateValidateToken { get; set; }
         public IEnumerable<ApplicationGroupViewModel> Groups { set; get; }
     }
 }

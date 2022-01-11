@@ -87,6 +87,7 @@ namespace DoAnWebBanHang.WebApp.Api
         }
 
         [Route("add")]
+        [HttpPut]
         public HttpResponseMessage Post(HttpRequestMessage request, PostViewModel postCategory)
         {
             return CreateHttpResponse(request, () =>

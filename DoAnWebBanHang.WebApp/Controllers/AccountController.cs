@@ -1,17 +1,23 @@
-﻿using BotDetect.Web.Mvc;
+﻿using AutoMapper;
+using BotDetect.Web.Mvc;
 using DoAnWebBanHang.Common;
+using DoAnWebBanHang.Data;
 using DoAnWebBanHang.Model.Models;
 using DoAnWebBanHang.Service;
 using DoAnWebBanHang.Service.Models;
 using DoAnWebBanHang.WebApp.App_Start;
 using DoAnWebBanHang.WebApp.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataProtection;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -22,14 +28,15 @@ namespace DoAnWebBanHang.WebApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        
+        WebShopDbContext _context;
         IUserService _userService;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IUserService userService, WebShopDbContext context)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             _userService = userService;
+            _context = context;
         }
 
         public ApplicationSignInManager SignInManager
@@ -221,6 +228,70 @@ namespace DoAnWebBanHang.WebApp.Controllers
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {
+            ForgotPasswordDto dto = new ForgotPasswordDto();
+            dto.DateValidateToken = DateTime.Now;
+            return View(dto);
+        }
+
+        [HttpPost]
+        //quên mật khẩu
+        public async Task<ActionResult> forgotpassword(ForgotPasswordDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null)
+            {
+                var provider = new DpapiDataProtectionProvider("DoAnWebBanHang.WebApp");
+
+                //var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>());
+
+                _userManager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(
+                    provider.Create("DoAnWebBanHang.WebApp"));
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user.Id.ToString());
+                var entityuser = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user);
+                entityuser.PasswordVerificationToken = randomTokenString();
+                entityuser.UserName = user.UserName;
+                entityuser.Id = user.Id;
+                model.newPassword = randomPassString();
+                user.PasswordVerificationToken = entityuser.PasswordVerificationToken;
+                user.DateValidateToken = DateTime.Now;
+                await _userManager.UpdateAsync(user);
+                //sendverificationemailpassword(entityuser, origin, model);
+                var result = await _userManager.ResetPasswordAsync(user.Id.ToString(), token, model.newPassword);
+                string content = System.IO.File.ReadAllText(Server.MapPath("/Assets/client/template/forgot.html"));
+                content = content.Replace("{{Email}}", model.Email);
+                content = content.Replace("{{Password}}", model.newPassword);
+                content = content.Replace("{{UserName}}",user.UserName);
+                MailHelper.SendMail(model.Email, "Yêu cầu lấy lại mật khẩu", content);
+                return View(model);
+            }
+            else
+            {
+                ViewBag.Error = "Email chưa đăng kí trong hệ thống ";
+                return View();
+            }
+        }
+
+        private string randomTokenString()
+        {
+            var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
+            var randomBytes = new byte[40];
+            rngCryptoServiceProvider.GetBytes(randomBytes);
+            // convert random bytes to hex string
+            return BitConverter.ToString(randomBytes).Replace("-", "");
+        }
+
+        private string randomPassString()
+        {
+            var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
+            var randomBytes = new byte[3];
+            rngCryptoServiceProvider.GetBytes(randomBytes);
+            // convert random bytes to hex string
+            return BitConverter.ToString(randomBytes).Replace("_", "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$");
         }
 
         [HttpPost]
