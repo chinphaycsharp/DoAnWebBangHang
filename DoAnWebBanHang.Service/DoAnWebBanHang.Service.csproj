@@ -62,6 +62,7 @@
     <Compile Include="FeedbackService.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\EmailModel.cs" />
+    <Compile Include="Models\ForgotPasswordDto.cs" />
     <Compile Include="Models\TopUserOrdersViewModel.cs" />
     <Compile Include="Models\UserOrderHistoryByCustomer.cs" />
     <Compile Include="OrderDetailService.cs" />

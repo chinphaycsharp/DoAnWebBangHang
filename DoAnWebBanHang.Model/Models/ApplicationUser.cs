@@ -19,6 +19,9 @@ namespace DoAnWebBanHang.Model.Models
         public string Address { set; get; }
 
         public DateTime? BirthDay { set; get; }
+        public string VerificationToken { get; set; }
+        public string PasswordVerificationToken { get; set; }
+        public Nullable<DateTime> DateValidateToken { get; set; }
 
         public bool isMember { get; set; }
 

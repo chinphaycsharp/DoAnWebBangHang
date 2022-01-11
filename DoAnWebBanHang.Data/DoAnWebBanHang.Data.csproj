@@ -113,6 +113,10 @@
     <Compile Include="Migrations\202112201657030_update-usersV3.Designer.cs">
       <DependentUpon>202112201657030_update-usersV3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201100221485_Forgot-Password.cs" />
+    <Compile Include="Migrations\202201100221485_Forgot-Password.Designer.cs">
+      <DependentUpon>202201100221485_Forgot-Password.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationGroupRepository.cs" />
@@ -192,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112201657030_update-usersV3.resx">
       <DependentUpon>202112201657030_update-usersV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201100221485_Forgot-Password.resx">
+      <DependentUpon>202201100221485_Forgot-Password.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

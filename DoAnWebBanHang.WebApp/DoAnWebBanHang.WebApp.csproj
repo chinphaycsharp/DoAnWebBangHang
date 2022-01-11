@@ -5431,7 +5431,7 @@
     <Content Include="Views\Post\Detail.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Home\UpdatePasword.cshtml" />
-    <Content Include="Views\Account\ForgotAccountName.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DoAnWebBanHang.Common\DoAnWebBanHang.Common.csproj">
